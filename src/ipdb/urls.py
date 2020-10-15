@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('pelis/<int:pk>', movie_detail, name="movie_detail_page"),
-    path('', home)
+    path('', home, name="home_page")
 ]
