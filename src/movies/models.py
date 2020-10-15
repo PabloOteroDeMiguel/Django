@@ -20,5 +20,7 @@ class Movie(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+
     def __str__(self):
         return self.title
