@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPBD: Internet Pelis Basadate</title>
+</head>
+<body>
+
+    <h1>Welcome to IPBD</h1>
+    {%for movie in movies %}
+        <img src=" {{ movie.image }} " alt=" {{ movie.title }}" title="{{ movie.title }}" height="300">
+    {% endfor %}
+
+</body>
+</html>
