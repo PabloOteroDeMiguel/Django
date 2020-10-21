@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Category(models.Model):
@@ -9,6 +10,8 @@ class Category(models.Model):
         return self.name
 
 class Movie(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=150)
     summary = models.TextField()

@@ -45,7 +45,9 @@ class CreateMovieView(LoginRequiredMixin, View):
         return render(request, "movie_form.html", {'form': form})
 
     def post(self, request):
-        form = MovieForm(request.POST)
+        movie = Movie()
+        movie.user = request.user #asignamos a la pelicula el user autenticado
+        form = MovieForm(request.POST, instance=movie)
         if form.is_valid():
             movie = form.save()
             form = MovieForm()
