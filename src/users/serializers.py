@@ -3,22 +3,30 @@ from rest_framework.authtoken.admin import User
 from rest_framework.exceptions import ValidationError
 
 
-class UserSerializer(serializers.Serializer):
+class UsersListSerializer(serializers.Serializer):
 
     id = serializers.ReadOnlyField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+
+class UserSerializer(UsersListSerializer):
+
     username = serializers.CharField()
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def validate_username(self, data):
-        if User.objects.filter(username=data).exists():
+        if self.instance is None and User.objects.filter(username=data).exists():
             raise ValidationError("User already exists")
+        if self.instance is not None and self.instance.username != data and User.objects.filter(username=data).exists():
+            raise ValidationError("Wanted user name is already in use")
         return data
 
     def create(self, validated_data):
         instance = User()
+        return self.update(instance, validated_data)
+
+    def update(self, instance, validated_data):
         instance.first_name = validated_data.get("first_name")
         instance.last_name = validated_data.get("last_name")
         instance.username = validated_data.get("username")
@@ -27,5 +35,3 @@ class UserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-    def update(self, instance, validated_data):
-        pass
