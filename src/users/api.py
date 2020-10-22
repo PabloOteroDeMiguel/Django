@@ -18,7 +18,6 @@ class HelloWorld(APIView):
     def put(self, request):
         return Response(request.data)
 
-
 class UsersListAPI(APIView):
 
     def get(self, request):
