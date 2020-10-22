@@ -34,5 +34,5 @@ urlpatterns = [
     path('api/1.0/hello/', HelloWorld.as_view(), name="api_hello_world"),
     path('api/1.0/users/<int:pk>', UserDetailApi.as_view(), name="api_user_detail"),
     path('api/1.0/users/', UsersListAPI.as_view(), name="api_users_list"),
-    path('api/1.0/movies/', MoviesListAPI.as_view(), name="apis_movies-list")
+    path('api/1.0/movies/', MoviesListAPI.as_view(), name="apis_movies_list")
 ]
