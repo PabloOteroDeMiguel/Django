@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.authtoken.admin import User
 from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -22,8 +23,10 @@ class UsersListAPI(APIView):
 
     def get(self, request):
         users = User.objects.all()
+        paginator = PageNumberPagination()
+        paginated_users = paginator.paginate_queryset(users, request)
         serializer = UsersListSerializer(users, many=True)
-        return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
