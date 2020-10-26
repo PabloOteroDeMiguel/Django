@@ -2,10 +2,11 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from movies.models import Movie
-from movies.permissions import MoviesPermission
-from movies.serializers import MovieSerializer, MoviesListSerializer
+from movies.models import Movie, Category
+from movies.permissions import MoviesPermission, CategoriesPermission
+from movies.serializers import MovieSerializer, MoviesListSerializer, CategorySerializer
 
 
 # enpoint creacion y listado de peliculas
@@ -28,3 +29,8 @@ class MovieDetailAPI(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [CategoriesPermission]
